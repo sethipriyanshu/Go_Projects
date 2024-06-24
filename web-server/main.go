@@ -23,6 +23,23 @@ func helloHandler(w http.ResponseWriter, r *http.Request) {
 
 }
 
+// declare formhandling function
+func formHandler(w http.ResponseWriter, r *http.Request) {
+	// handling error if there's any problem with parsing the form
+	if err := r.ParseForm(); err != nil {
+		fmt.Fprintf(w, "ParseForm() err: %v", err)
+		return
+	}
+	// display message if request went through with no errors
+	fmt.Fprintf(w, "POST request successful")
+	// store the input values in variables
+	name := r.FormValue("name")
+	address := r.FormValue("address")
+	// display the stored variable values
+	fmt.Fprintf(w, "Name = %s\n", name)
+	fmt.Fprintf(w, "Address = %s\n", address)
+}
+
 func main() {
 	// initialize a file server using the http import and set it to static directory
 	fileServer := http.FileServer(http.Dir("./static"))
