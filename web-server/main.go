@@ -31,7 +31,7 @@ func formHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	// display message if request went through with no errors
-	fmt.Fprintf(w, "POST request successful")
+	fmt.Fprintf(w, "POST request successful\n")
 	// store the input values in variables
 	name := r.FormValue("name")
 	address := r.FormValue("address")
