@@ -27,6 +27,7 @@ func deleteTask(Id string) {
 	for index, task := range Tasks {
 		if task.id == Id {
 			Tasks = append(Tasks[:index], Tasks[index+1:]...)
+			break
 		}
 	}
 }
@@ -59,14 +60,28 @@ func main() {
 			viewTasks()
 
 		} else if userChoice == "update" {
-
-		} else if userChoice == "delete" {
+			fmt.Printf("Enter the Task ID to update: ")
 			idreader := bufio.NewReader(os.Stdin)
 			Id, _ := idreader.ReadString('\n')
+			Id = strings.TrimSpace(Id)
+			deleteTask(Id)
+			fmt.Print("Ente the Task Description: ")
+			var task Task
+			taskreader := bufio.NewReader(os.Stdin)
+			ToDo, _ := taskreader.ReadString('\n')
+			task.todo = ToDo
+			task.id = strconv.Itoa(len(Tasks))
+			createTask(task)
+
+		} else if userChoice == "delete" {
+			fmt.Printf("Enter the Task ID to delete: ")
+			idreader := bufio.NewReader(os.Stdin)
+			Id, _ := idreader.ReadString('\n')
+			Id = strings.TrimSpace(Id)
 			deleteTask(Id)
 			fmt.Println("The Task has been Deleted succesfully!")
 		} else {
-
+			fmt.Println("Invalid Input")
 		}
 	}
 }
