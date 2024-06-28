@@ -4,8 +4,27 @@ import (
 	"bufio"
 	"fmt"
 	"os"
+	"strconv"
 	"strings"
 )
+
+type Task struct {
+	todo   string
+	status string
+	id     string
+}
+
+var Tasks []Task
+
+func createTask(task Task) {
+	Tasks = append(Tasks, task)
+	fmt.Println("The Task has been added succesfully!")
+}
+func viewTasks() {
+	for _, task := range Tasks {
+		fmt.Printf("Task: %vStatus: %v, ID: %v\n", task.todo, task.status, task.id)
+	}
+}
 
 func main() {
 	fmt.Print("**************************************\n Weclome to your daily task manager! \n**************************************\n")
@@ -22,8 +41,17 @@ func main() {
 			fmt.Println("Exiting the Program!")
 			break
 		} else if userChoice == "create" {
+			fmt.Print("Ente the Task Description: ")
+			var task Task
+			taskreader := bufio.NewReader(os.Stdin)
+			ToDo, _ := taskreader.ReadString('\n')
+			task.todo = ToDo
+			task.id = strconv.Itoa(len(Tasks))
+			task.status = "Pending"
+			createTask(task)
 
 		} else if userChoice == "view" {
+			viewTasks()
 
 		} else if userChoice == "update" {
 
