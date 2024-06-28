@@ -9,20 +9,25 @@ import (
 )
 
 type Task struct {
-	todo   string
-	status string
-	id     string
+	todo string
+	id   string
 }
 
 var Tasks []Task
 
 func createTask(task Task) {
 	Tasks = append(Tasks, task)
-	fmt.Println("The Task has been added succesfully!")
 }
 func viewTasks() {
 	for _, task := range Tasks {
-		fmt.Printf("Task: %vStatus: %v, ID: %v\n", task.todo, task.status, task.id)
+		fmt.Printf("Task: %vID: %v\n", task.todo, task.id)
+	}
+}
+func deleteTask(Id string) {
+	for index, task := range Tasks {
+		if task.id == Id {
+			Tasks = append(Tasks[:index], Tasks[index+1:]...)
+		}
 	}
 }
 
@@ -47,8 +52,8 @@ func main() {
 			ToDo, _ := taskreader.ReadString('\n')
 			task.todo = ToDo
 			task.id = strconv.Itoa(len(Tasks))
-			task.status = "Pending"
 			createTask(task)
+			fmt.Println("The Task has been added succesfully!")
 
 		} else if userChoice == "view" {
 			viewTasks()
@@ -56,7 +61,10 @@ func main() {
 		} else if userChoice == "update" {
 
 		} else if userChoice == "delete" {
-
+			idreader := bufio.NewReader(os.Stdin)
+			Id, _ := idreader.ReadString('\n')
+			deleteTask(Id)
+			fmt.Println("The Task has been Deleted succesfully!")
 		} else {
 
 		}
